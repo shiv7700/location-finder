@@ -22,12 +22,14 @@ const t6 = document.querySelector(".t6");
 const t7 = document.querySelector(".t7");
 const t8 = document.querySelector(".t8");
 const usage = document.querySelector(".usage");
+const refresh = document.querySelector(".refresh");
 
 async function getInfo() {
   try {
     const res = await fetch(url);
     let data = await res.json();
     console.log(data);
+    const threat = data.threat;
     ip.innerHTML = data.ip;
     country.innerHTML = data.country_name;
     countryCode.innerHTML = data.country_code;
@@ -38,10 +40,14 @@ async function getInfo() {
     long.innerHTML = data.longitude;
     language.innerHTML =
       data.languages[1].native + " " + data.languages[0].native;
-    ip.innerHTML = data.ip;
-    ip.innerHTML = data.ip;
-    ip.innerHTML = data.ip;
-    ip.innerHTML = data.ip;
+    t1.innerHTML = data.threat.is_tor ? "yes" : "no";
+    t2.innerHTML = data.threat.is_icloud_relay ? "yes" : "no";
+    t3.innerHTML = data.threat.is_proxy ? "yes" : "no";
+    t4.innerHTML = data.threat.is_datacenter ? "yes" : "no";
+    t5.innerHTML = data.threat.is_anonymous ? "yes" : "no";
+    t6.innerHTML = data.threat.is_known_attacker ? "yes" : "no";
+    t7.innerHTML = data.threat.is_known_abuser ? "yes" : "no";
+    t8.innerHTML = data.threat.is_threat ? "yes" : "no";
     flag.src = data.flag;
     usage.innerHTML = `you fool api is not free , api hit today { ${data.count} }`;
   } catch (error) {
@@ -51,4 +57,8 @@ async function getInfo() {
 
 clickMe.addEventListener("click", function () {
   getInfo();
+});
+
+refresh.addEventListener("click", function () {
+  location.reload();
 });
